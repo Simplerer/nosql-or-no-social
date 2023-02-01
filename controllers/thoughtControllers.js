@@ -4,6 +4,7 @@ const { User, Thought, Reaction } = require('../models');
 module.exports = {
     getThoughts(req, res) {
         Thought.find()
+            .select('-__v')
             .then((thoughts) => {
                 return res.json({ thoughts })
             })
@@ -15,6 +16,7 @@ module.exports = {
 
     getOneThought(req, res) {
         Thought.findOne({ _id: req.params.thoughtId })
+        .select('-__v')
             .then((thought) =>
                 !thought
                     ? res.status(404).json({ message: 'Not a thought here Captain!' })
@@ -82,7 +84,7 @@ module.exports = {
     deleteReaction(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $pull: { reactions: { _id: req.params.reactionId } } },
+            { $pull: { reactions: { reactionId: req.params.reactionId } } },
             { new: true }
         )
             .then((thought) => {

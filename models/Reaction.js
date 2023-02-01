@@ -18,17 +18,15 @@ const reactionSchema = new Schema( {
     createdAt: {
         type: Date,
         default: Date.now,
+        get: value => value.toDateString()
     },
 },
 {
     toJSON: {
         virtuals: true,
+        getters: true
     },
     id: false,
-})
-
-reactionSchema.virtual('CreatedAt').get(function() {
-    return this.createdAt.toDateString()
 })
 
 module.exports = reactionSchema;

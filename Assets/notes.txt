@@ -1,5 +1,3 @@
 
 
 delete on user, add cascading affect on thoughts 
-
-in populate, use select to remove extra fields from returning data
