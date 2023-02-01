@@ -28,13 +28,13 @@ module.exports = {
 
     createThought(req, res) {
         Thought.create(req.body)
-        .then((data) => {
-            return User.findOneAndUpdate(
-              { _id: req.body.userId },
-              { $addToSet: { thoughts: data._id } },
-              { new: true }
-            );
-          }) 
+            .then((data) => {
+                return User.findOneAndUpdate(
+                    { _id: req.body.userId },
+                    { $addToSet: { thoughts: data._id } },
+                    { new: true }
+                );
+            })
             .then((thought) => res.json(thought))
             .catch((err) => res.status(500).json(err));
     },
@@ -68,5 +68,30 @@ module.exports = {
                 return res.status(500).json(err);
             });
     },
+
+    createReaction(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $push: { reactions: req.body } },
+            { new: true }
+        )
+            .then((reaction) => res.json(reaction))
+            .catch((err) => res.status(500).json(err));
+    },
+
+    deleteReaction(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $pull: { reactions: { _id: req.params.reactionId } } },
+            { new: true }
+        )
+            .then((thought) => {
+                res.json(thought)
+            })
+            .catch((err) => {
+                console.log(err);
+                return res.status(500).json(err);
+            });
+    }
 
 }

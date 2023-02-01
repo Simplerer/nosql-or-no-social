@@ -19,7 +19,16 @@ const reactionSchema = new Schema( {
         type: Date,
         default: Date.now,
     },
+},
+{
+    toJSON: {
+        virtuals: true,
+    },
+    id: false,
 })
 
+reactionSchema.virtual('CreatedAt').get(function() {
+    return this.createdAt.toDateString()
+})
 
 module.exports = reactionSchema;
