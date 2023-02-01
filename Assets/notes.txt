@@ -4,3 +4,5 @@ formating date in THought Schema also reaction
 friends schema and how it relates to user
 
 delete on user, add cascading affect on thoughts 
+
+in populate, use select to remove extra fields from returning data
