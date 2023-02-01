@@ -15,11 +15,14 @@ const userSchema = new Schema({
             return /.+\@.+\..+/.test(val)
         }, 'Valid email required!'],        
     },
-    thoughts: [ {
+    thoughts: [{
         type: Schema.Types.ObjectId,
         ref: 'thought'
     }],
-    friends: [],
+    friends: [{
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    }],
 },
 {
     toJSON: {
