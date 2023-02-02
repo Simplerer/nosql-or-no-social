@@ -1,3 +1,0 @@
-
-
-delete on user, add cascading affect on thoughts 

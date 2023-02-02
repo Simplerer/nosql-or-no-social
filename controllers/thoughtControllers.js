@@ -37,7 +37,7 @@ module.exports = {
                     { new: true }
                 );
             })
-            .then((thought) => res.json(thought))
+            .then((user) => res.json({message: 'All good!'}))
             .catch((err) => res.status(500).json(err));
     },
 
@@ -77,7 +77,7 @@ module.exports = {
             { $push: { reactions: req.body } },
             { new: true }
         )
-            .then((reaction) => res.json(reaction))
+            .then((reaction) => res.json({ message: 'Tell your friends!' }))
             .catch((err) => res.status(500).json(err));
     },
 
@@ -88,7 +88,7 @@ module.exports = {
             { new: true }
         )
             .then((thought) => {
-                res.json(thought)
+                res.json({ message: 'Not so important' })
             })
             .catch((err) => {
                 console.log(err);

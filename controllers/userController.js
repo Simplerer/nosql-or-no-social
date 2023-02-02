@@ -17,11 +17,9 @@ module.exports = {
 
     getOneUser(req, res) {
         User.findOne({ _id: req.params.userId })
-            .populate({
-                path: 'thoughts',
-                path: 'friends',
-                select: '-__v'})
-            // .populate('friends')
+            .populate('thoughts')
+            .populate('friends')
+            .select('-__v')
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No one by that Id, why not make one?' })
@@ -35,7 +33,7 @@ module.exports = {
 
     createUser(req, res) {
         User.create(req.body)
-            .then((user) => res.json(user))
+            .then((user) => res.json({ message: 'Welcome newbie!' }))
             .catch((err) => res.status(500).json(err));
     },
 
@@ -48,7 +46,7 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No one by that Id, why not make one?' })
-                    : res.json({ user })
+                    : res.json({ message: 'All up to date!' })
             )
             .catch((err) => {
                 console.log(err);
@@ -61,7 +59,7 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No one by that Id, who else will we try to remove?' })
-                    : res.json({ user })
+                    : res.json({ message: 'Come again!' })
             )
             .catch((err) => {
                 console.log(err);
@@ -76,7 +74,7 @@ module.exports = {
             { $push: { friends: req.params.friendId } },
             { new: true })
             .then((user) => {
-                res.json(user)
+                res.json({ message: 'Welcome friend!' })
             })
 
             .catch((err) => {
@@ -93,7 +91,7 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No one by that Id, who else will we try to remove?' })
-                    : res.json({ user })
+                    : res.json({ message: 'Bye Felicia!' })
             )
             .catch((err) => {
                 console.log(err);
